@@ -1,0 +1,40 @@
+#include <stdio.h>
+
+// Function to check if a value exists in an array
+int exists(int arr[], int size, int value) {
+    for (int i = 0; i < size; i++) {
+        if (arr[i] == value) {
+            return 1;  // Found
+        }
+    }
+    return 0;  // Not found
+}
+
+int main() {
+    int nums1[] = {2, 3, 2};
+    int nums2[] = {1, 2};
+
+    int n = sizeof(nums1) / sizeof(nums1[0]);
+    int m = sizeof(nums2) / sizeof(nums2[0]);
+
+    int answer1 = 0, answer2 = 0;
+
+    // Count elements of nums1 that exist in nums2
+    for (int i = 0; i < n; i++) {
+        if (exists(nums2, m, nums1[i])) {
+            answer1++;
+        }
+    }
+
+    // Count elements of nums2 that exist in nums1
+    for (int i = 0; i < m; i++) {
+        if (exists(nums1, n, nums2[i])) {
+            answer2++;
+        }
+    }
+
+    printf("[%d, %d]\n", answer1, answer2);
+
+    return 0;
+}
+OUTPUT:[2, 1]
