@@ -1,0 +1,45 @@
+#include<stdio.h>
+#include<math.h>
+int n=4;
+double min=1e9;
+int best[10];
+double dist(double x1,double y1,double x2,double y2){
+return sqrt((x1-x2)*(x1-x2)+(y1-y2)*(y1-y2));
+}
+void swap(int*a,int*b){
+int t=*a;*a=*b;*b=t;
+}
+void perm(int a[],int l,double x[],double y[]){
+if(l==n){
+double d=0;
+d+=dist(x[0],y[0],x[a[0]],y[a[0]]);
+for(int i=0;i<n-2;i++)
+d+=dist(x[a[i]],y[a[i]],x[a[i+1]],y[a[i+1]]);
+d+=dist(x[a[n-2]],y[a[n-2]],x[0],y[0]);
+if(d<min){
+min=d;
+for(int i=0;i<n-1;i++)best[i]=a[i];
+}
+return;
+}
+for(int i=l;i<n-1;i++){
+swap(&a[l],&a[i]);
+perm(a,l+1,x,y);
+swap(&a[l],&a[i]);
+}
+}
+int main(){
+double x[]={0,1,4,3};
+double y[]={0,2,0,3};
+int a[]={1,2,3};
+perm(a,0,x,y);
+printf("MinimumDistance:%.2lf\n",min);
+printf("ShortestPath:(0,0)->");
+for(int i=0;i<n-1;i++)
+printf("(%.0lf,%.0lf)->",x[best[i]],y[best[i]]);
+printf("(0,0)");
+return 0;
+}
+
+OUTPUT:MinimumDistance:12.10
+ShortestPath:(0,0)->(1,2)->(3,3)->(4,0)->(0,0)
